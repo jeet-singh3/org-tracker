@@ -4,4 +4,5 @@ echo "bootstrapping..."
 
 env
 ls -l
-yarn add --prod
+yarn --production
+node server.js

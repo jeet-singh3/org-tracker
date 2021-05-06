@@ -10,7 +10,8 @@
         "test:lint:staged": "yarn pretty-quick --staged",
         "test": "yarn concurrently npm:test:unit npm:test:lint",
         "build": "yarn webpack",
-        "commit": "yarn git-cz"
+        "commit": "yarn git-cz",
+        "docker": "yarn build && docker-compose up --force-recreate"
     },
     "repository": {
         "type": "git",
