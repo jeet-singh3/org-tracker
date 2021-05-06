@@ -3,6 +3,8 @@ version: '3.7'
 services:
     api:
         container_name: org-tracker-api
+        depends_on:
+            - postgres
         build:
             context: .
             dockerfile: Dockerfile
@@ -12,3 +14,11 @@ services:
             - '5000:3000'
         environment:
             - PORT=3000
+    
+    postgres:
+        image: postgres:12.1-alpine
+        environment:
+            POSTGRES_USER: "postgres"
+            POSTGRES_PASSWORD: "postgres"
+        ports:
+            - '10001:5432'
