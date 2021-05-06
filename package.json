@@ -8,7 +8,10 @@
         "test:unit": "yarn jest",
         "test:lint": "yarn eslint ./**/*.ts",
         "test:lint:staged": "yarn pretty-quick --staged",
-        "test": "yarn concurrently npm:test:unit npm:test:lint",
+        "pretest": "docker-compose down && docker-compose up -d postgres && sleep 20",
+        "test_things": "yarn concurrently npm:test:unit npm:test:lint",
+        "test": "yarn pretest && yarn test_things && yarn posttest",
+        "posttest": "docker-compose down",
         "build": "yarn webpack",
         "commit": "yarn git-cz",
         "docker": "yarn build && docker-compose up --build --force-recreate"
