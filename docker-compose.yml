@@ -6,6 +6,8 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
+        volumes:
+            - /tmp/logs:/opt/apache-tomcat-aclogs/
         ports:
             - '5000:3000'
         environment:
