@@ -4,7 +4,7 @@ import app from './app';
 describe('app', () => {
     it('should return healthy from /healthcheck', (done) => {
         request(app)
-            .get(`/healthcheck`)
+            .get(`/api/v1/healthcheck`)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
@@ -15,7 +15,7 @@ describe('app', () => {
     });
     it('should return 404 from undefined routes', (done) => {
         request(app)
-            .get(`/i-do-not-exist`)
+            .get(`/api/v1/i-do-not-exist`)
             .expect('Content-Type', /plain/)
             .expect(404)
             .end((err, res) => {

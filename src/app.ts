@@ -4,6 +4,6 @@ import routes from './routes';
 
 const app = express();
 app.use(helmet());
-app.use('/', routes);
+app.use('/api/v1/', routes);
 
 export default app;

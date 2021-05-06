@@ -10,18 +10,19 @@
         "test:lint:staged": "yarn pretty-quick --staged",
         "test": "yarn concurrently npm:test:unit npm:test:lint",
         "build": "yarn webpack",
-        "commit": "yarn git-cz"
+        "commit": "yarn git-cz",
+        "docker": "yarn build && docker-compose up --force-recreate"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/unicorn-froyo/express-ts-starter-kit.git"
+        "url": "git+https://github.com/jeet-singh3/org-tracker.git"
     },
-    "author": "unicorn-froyo",
+    "author": "jeet-singh3",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/unicorn-froyo/express-ts-starter-kit/issues"
+        "url": "https://github.com/jeet-singh3/org-tracker/issues"
     },
-    "homepage": "https://github.com/unicorn-froyo/express-ts-starter-kit#readme",
+    "homepage": "https://github.com/jeet-singh3/org-tracker#readme",
     "devDependencies": {
         "@commitlint/config-conventional": "^8.2.0",
         "@types/express": "^4.17.11",
@@ -48,7 +49,7 @@
         "ts-jest": "^24.2.0",
         "ts-loader": "^6.2.1",
         "ts-node": "^8.5.4",
-        "typescript": "^3.7.4",
+        "typescript": "^4.2.4",
         "webpack": "^4.41.5",
         "webpack-cli": "^4.0.0-beta.1"
     },
