@@ -1,7 +1,6 @@
 const { Client } = require('pg')
 
 const dbInit = async (isTest) => {
-    isTest = isTest || false
     const client = new Client({
         host: process.env.DB_HOST || "localhost",
         port: process.env.DB_PORT || 10001,
@@ -39,6 +38,8 @@ const dbInit = async (isTest) => {
         })
         .catch(e => console.error(e.stack))
         .then(() => client.end())  
+    
+    console.log("API is ready!")
 };
 
 dbInit()

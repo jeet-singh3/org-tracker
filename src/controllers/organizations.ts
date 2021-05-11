@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { Pool } from 'pg'
+import { validate_request, ValidationError } from '../utils/utilities'
 
 const pool = new Pool({
     host: process.env.DB_HOST || "localhost",
@@ -11,18 +12,11 @@ const pool = new Pool({
     connectionTimeoutMillis: 2000,
 })
 
-class ValidationError extends Error {
-    constructor(message: string) {
-        super(message); // (1)
-        this.name = "ValidationError"; // (2)
-    }
-}
-
 const org_create = async (req: Request, res: Response) => {
     console.log('Organization Create endpoint hit!');
     console.log(req.body);
     try {
-        await validate_request(req, res);
+        await validate_request(req);
         pool.query(
             'insert into organizations (name, createDate, employees, isPublic) select $1, $2, $3, $4 on conflict(name)' +
             'do update set createDate = $2, employees = $3, isPublic = $4 where organizations.name = $1', 
@@ -46,20 +40,5 @@ const org_create = async (req: Request, res: Response) => {
     }
    
 };
-
-async function validate_request(req: Request, res: Response): Promise<void> {
-    if (!('name' in req.body)) {
-        throw new ValidationError("Organization name is required to create an organization")
-    };
-    if (!('createDate' in req.body)) {
-        throw new ValidationError("Organizations must have a creation date in the form YYYY-MM-DD")
-    };
-    if (!('employees' in req.body)) {
-        throw new ValidationError("Organizations must have employees")
-    };
-    if (!('isPublic' in req.body)) {
-        throw new ValidationError("Organization must be either public (true) or private (false)")
-    };
-}
 
 export { org_create };
