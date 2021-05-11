@@ -54,16 +54,16 @@ describe('app', () => {
         expect(orgCreate.status).toEqual(400)
         expect(orgCreate.text).toEqual('{"message":"Organization must be either public (true) or private (false)"}')
     });
-    // it('should return status 201 from /organizations', async () => {
-    //     const orgCreate = await request(app)
-    //         .post('/api/v1/organizations')
-    //         .set('Accept', 'application/json')
-    //         .send({
-    //             name: 'john',
-    //             createDate: '2020-02-01',
-    //             employees: 100,
-    //             isPublic: true
-    //         })
-    //     expect(orgCreate.status).toEqual(201)
-    // });
+    it('should return status 201 from /organizations', async () => {
+        const orgCreate = await request(app)
+            .post('/api/v1/organizations')
+            .set('Accept', 'application/json')
+            .send({
+                name: 'john',
+                createDate: '2020-02-01',
+                employees: 100,
+                isPublic: true
+            })
+        expect(orgCreate.status).toEqual(201)
+    });
 });

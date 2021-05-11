@@ -9,7 +9,7 @@
         "test:lint": "yarn eslint ./**/*.ts",
         "test:lint:staged": "yarn pretty-quick --staged",
         "pretest": "docker-compose down && docker-compose up -d postgres && sleep 20 && node src/utils/migrate.js",
-        "test_things": "yarn concurrently npm:test:unit npm:test:lint",
+        "test_things": "yarn concurrently npm:test:unit npm:test:lint --forceExit",
         "test": "yarn pretest && yarn test_things && yarn posttest",
         "posttest": "docker-compose down",
         "build": "yarn webpack",

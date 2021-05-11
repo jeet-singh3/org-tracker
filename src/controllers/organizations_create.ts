@@ -3,7 +3,7 @@ import { Pool } from 'pg'
 
 const pool = new Pool({
     host: process.env.DB_HOST || "localhost",
-    port: parseInt(process.env.DB_PORT || "5432", 10) || 10001,
+    port: parseInt(process.env.DB_PORT || "10001", 10) || 10001,
     user: process.env.DB_USER || "postgres",
     password: process.env.DB_PASS || "postgres",
     max: 20,
@@ -23,9 +23,19 @@ const org_create = async (req: Request, res: Response) => {
     console.log(req.body);
     try {
         await validate_request(req, res);
-        const msg = await create_organization(req.body.name, req.body.createDate, req.body.employees, req.body.isPublic);
-        console.log(`Value of msg: ${msg}`);
-        res.status(201).send({ message: msg });
+        pool.query(
+            'insert into organizations (name, createDate, employees, isPublic) select $1, $2, $3, $4', 
+            [req.body.name, req.body.createDate, req.body.employees, req.body.isPublic], 
+            (err: Error , result: { rows: { name: any }[] }) => {
+                if (err) {
+                    throw err
+                }
+                let returnable = `Inserted organization ${req.body.name} created on ${req.body.createDate} `+
+                                `with ${req.body.employees} emplpoyees. Is Public: ${req.body.isPublic}.`
+                res.status(201).send({ message: returnable });
+                return
+            }
+        )
     } catch (error) {
         if (error instanceof ValidationError) {
             res.status(400).send({message: error.message});
@@ -49,23 +59,6 @@ async function validate_request(req: Request, res: Response): Promise<void> {
     if (!('isPublic' in req.body)) {
         throw new ValidationError("Organization must be either public (true) or private (false)")
     };
-}
-
-const create_organization = async (name: string, createDate: string, employees: number, isPublic: boolean) => {
-    pool.query(
-        'insert into organizations (name, createDate, employees, isPublic) select $1, $2, $3, $4', 
-        [name, createDate, employees, isPublic], (err: Error , result: { rows: { name: any }[] }) => {
-            if (err) {
-                return Promise.reject(err.stack)
-            }
-            if (result) {
-                let returnable = `Inserted organization ${name} created on ${createDate} with ${employees} emplpoyees. ` +
-                                `Is Public: ${isPublic}.`
-                console.log(`Inside function message value: ${returnable}`)
-                return Promise.resolve(returnable)
-            } 
-        }
-    )
 }
 
 export { org_create };
