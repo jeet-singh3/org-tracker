@@ -30,7 +30,7 @@ async function generate_sql_statement(queries: Request["query"]): Promise<String
                     } else if (superkey == "lte") { sql_stmt += `<= $${i} `; continue;
                     } else if (superkey == "gt") {sql_stmt += `> $${i} `; continue;
                     } else if (superkey == "gte") {sql_stmt += `>= $${i} `; continue; 
-                    } else { continue }  
+                    } else { sql_stmt += `= $${i} `; continue }  
                 }
             } else { sql_stmt += `= $${i} `}
         }
