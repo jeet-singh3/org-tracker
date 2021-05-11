@@ -8,7 +8,7 @@
         "test:unit": "yarn jest",
         "test:lint": "yarn eslint ./**/*.ts",
         "test:lint:staged": "yarn pretty-quick --staged",
-        "pretest": "docker-compose down && docker-compose up -d postgres && sleep 20",
+        "pretest": "docker-compose down && docker-compose up -d postgres && sleep 20 && node src/utils/migrate.js",
         "test_things": "yarn concurrently npm:test:unit npm:test:lint",
         "test": "yarn pretest && yarn test_things && yarn posttest",
         "posttest": "docker-compose down",
@@ -93,6 +93,7 @@
         ]
     },
     "dependencies": {
+        "@types/pg": "^7.14.11",
         "express": "^4.17.1",
         "helmet": "^4.6.0",
         "pg": "^8.6.0"
