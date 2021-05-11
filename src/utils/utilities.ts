@@ -38,7 +38,22 @@ async function generate_sql_statement(queries: Request["query"]): Promise<String
     return Promise.resolve(sql_stmt)
 }
 
-async function validate_request(req: Request): Promise<void> {
+async function validate_fetch_request(queries: Request["query"]): Promise<void> {
+    for (const key in queries) {
+        const value = queries[key]
+        if (key == 'name' && typeof value!= "string") {
+            throw new ValidationError("Name must be a string")
+        }
+        if (key == 'isPublic' && typeof value!= "string") {
+            throw new ValidationError("isPublic must be a string")
+        }
+        if (key == 'isPublic' && (value != "true" && value != "false")) {
+            throw new ValidationError("isPublic must be either true or false")
+        }
+    }
+}
+
+async function validate_create_request(req: Request): Promise<void> {
     if (!('name' in req.body)) {
         throw new ValidationError("Organization name is required to create an organization")
     };
@@ -53,4 +68,4 @@ async function validate_request(req: Request): Promise<void> {
     };
 }
 
-export { validate_request, generate_sql_statement,ValidationError }
+export { validate_create_request, validate_fetch_request, generate_sql_statement, ValidationError }
