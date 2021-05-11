@@ -1,6 +1,6 @@
-# uses the unicorn-froyo express-ts-starter-kit
-
 ## Organization Tracker.
+
+# uses the unicorn-froyo express-ts-starter-kit
 
 This is backend api service in node.js that serves two endpoints for an organization tracker. This project uses yarn for package management and assumes you have _yarn_ and _docker_.
 
