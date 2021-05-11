@@ -2,7 +2,7 @@
 
 # uses the unicorn-froyo express-ts-starter-kit
 
-This is backend api service in node.js that serves two endpoints for an organization tracker. This project uses yarn for package management and assumes you have _yarn_ and _docker_.
+This is backend api service in node.js that serves two endpoints for an organization tracker. This project uses yarn for package management and assumes you have _node.js_, _yarn_, and _docker_.
 
 **Endpoint 1: Create Organization**
 
@@ -36,6 +36,8 @@ You can also pass in no query params and retrieve every organization.
 
 Testing is executed via the Jest runner and uses Supertest.
 In order to test:
+
+1. `yarn test`
 
 ### Running Locally:
 
