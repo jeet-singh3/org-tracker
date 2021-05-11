@@ -15,6 +15,7 @@ const org_create = async (req: Request, res: Response) => {
                 if (err) {
                     throw err
                 }
+                console.log(result)
                 let returnable = `Inserted organization ${req.body.name.toLowerCase()} created on ${req.body.createDate} `+
                                 `with ${req.body.employees} emplpoyees. Is Public: ${req.body.isPublic}.`
                 res.status(201).send({ message: returnable });
