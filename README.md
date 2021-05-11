@@ -37,7 +37,8 @@ You can also pass in no query params and retrieve every organization.
 Testing is executed via the Jest runner and uses Supertest.
 In order to test:
 
-1. `yarn test`
+1. Ensure all dependencies are installed with `yarn`
+2. run `yarn test`
 
 ### Running Locally:
 
