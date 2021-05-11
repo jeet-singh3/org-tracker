@@ -24,13 +24,14 @@ const org_create = async (req: Request, res: Response) => {
     try {
         await validate_request(req, res);
         pool.query(
-            'insert into organizations (name, createDate, employees, isPublic) select $1, $2, $3, $4', 
-            [req.body.name, req.body.createDate, req.body.employees, req.body.isPublic], 
+            'insert into organizations (name, createDate, employees, isPublic) select $1, $2, $3, $4 on conflict(name)' +
+            'do update set createDate = $2, employees = $3, isPublic = $4 where organizations.name = $1', 
+            [req.body.name.toLowerCase(), req.body.createDate, req.body.employees, req.body.isPublic], 
             (err: Error , result: { rows: { name: any }[] }) => {
                 if (err) {
                     throw err
                 }
-                let returnable = `Inserted organization ${req.body.name} created on ${req.body.createDate} `+
+                let returnable = `Inserted organization ${req.body.name.toLowerCase()} created on ${req.body.createDate} `+
                                 `with ${req.body.employees} emplpoyees. Is Public: ${req.body.isPublic}.`
                 res.status(201).send({ message: returnable });
                 return
