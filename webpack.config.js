@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 const isProduction = typeof NODE_ENV !== 'undefined' && NODE_ENV === 'production';
 const mode = isProduction ? 'production' : 'development';
@@ -21,6 +22,7 @@ module.exports = [
         resolve: {
             extensions: ['.tsx', '.ts', '.js'],
         },
+        plugins: [new webpack.IgnorePlugin({ resourceRegExp: /^pg-native$/ })],
         output: {
             filename: 'server.js',
             path: path.resolve(__dirname, 'dist'),
