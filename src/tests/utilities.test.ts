@@ -6,12 +6,12 @@ const my_object_full = {
     employees: { lte: '100' },
     isPublic: 'true'
 };
-const my_object_full_sql = 'select name, createDate, employees, isPublic from organizations where name like %$1% and createDate < $2 and employees <= $3 and isPublic = $4 '
+const my_object_full_sql = 'select name, createDate, employees, isPublic from organizations where name ~ $1 and createDate < $2 and employees <= $3 and isPublic = $4 '
 
 const my_object_name = {
     name: 'jeet'
 }
-const my_object_name_sql = 'select name, createDate, employees, isPublic from organizations where name like %$1% '
+const my_object_name_sql = 'select name, createDate, employees, isPublic from organizations where name ~ $1 '
 
 const my_object_create = {
     createDate: '2020-02-02',
@@ -31,7 +31,7 @@ const my_object_full_gt = {
     employees: { gte: '100' },
     isPublic: 'true'
 };
-const my_object_full_gt_sql = 'select name, createDate, employees, isPublic from organizations where name like %$1% and createDate > $2 and employees >= $3 and isPublic = $4 '
+const my_object_full_gt_sql = 'select name, createDate, employees, isPublic from organizations where name ~ $1 and createDate > $2 and employees >= $3 and isPublic = $4 '
 
 const my_object_full_gt_extra_bad = {
     name: 'jeet',
@@ -40,7 +40,7 @@ const my_object_full_gt_extra_bad = {
     extra: { gt: '9001' },
     isPublic: 'true'
 };
-const my_object_full_gt_extra_bad_sql = 'select name, createDate, employees, isPublic from organizations where name like %$1% and createDate > $2 and employees = $3 and isPublic = $4 '
+const my_object_full_gt_extra_bad_sql = 'select name, createDate, employees, isPublic from organizations where name ~ $1 and createDate > $2 and employees = $3 and isPublic = $4 '
 
 describe('sqlStatementGenerator', () => {
     it('should return the correct sql statement for the passed in full lt queries', async () => {
